@@ -10,46 +10,46 @@ const Login = () => {
   const [usernameErrText, setUsernameErrText] = useState("");
   const [passwordErrText, setPasswordErrText] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setUsernameErrText("");
-    setPasswordErrText("");
+  const handleSubmit = async (e) => { //1
+    e.preventDefault();  
+    setUsernameErrText(""); //2
+    setPasswordErrText(""); //3
 
-    const data = new FormData(e.target);
-    const username = data.get("username").trim();
-    const password = data.get("password").trim();
+    const data = new FormData(e.target);  //4
+    const username = data.get("username").trim();  //5
+    const password = data.get("password").trim(); //6
 
     let err = false;
 
-    if (username === "") {
-      err = true;
-      setUsernameErrText("Please fill this field");
+    if (username === "") {  //7
+      err = true; 
+      setUsernameErrText("Please fill this field");  //8
     }
-    if (password === "") {
+    if (password === "") { //9
       err = true;
-      setPasswordErrText("Please fill this field");
+      setPasswordErrText("Please fill this field");  //10
     }
 
-    if (err) return;
+    if (err) return; //11
 
-    setLoading(true);
+    setLoading(true); //12
 
-    try {
-      const res = await authApi.login({ username, password });
-      setLoading(false);
-      localStorage.setItem("token", res.token);
-      navigate("/");
-    } catch (err) {
-      const errors = err.data.errors;
-      errors.forEach((e) => {
-        if (e.param === "username") {
-          setUsernameErrText(e.msg);
+    try {  //13
+      const res = await authApi.login({ username, password });//14
+      setLoading(false);//15
+      localStorage.setItem("token", res.token);//16
+      navigate("/"); //17
+    } catch (err) {  //18
+      const errors = err.data.errors;//19
+      errors.forEach((e) => {//20
+        if (e.param === "username") { //21
+          setUsernameErrText(e.msg);//22
         }
-        if (e.param === "password") {
-          setPasswordErrText(e.msg);
+        if (e.param === "password") {  //23
+          setPasswordErrText(e.msg);  //24
         }
       });
-      setLoading(false);
+      setLoading(false); //25
     }
   };
 
